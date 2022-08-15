@@ -1,0 +1,28 @@
+{
+    "name": "jpoliveira08/allblacks-team-excel-management",
+    "description": "A system to manage an excel table with XML files.",
+    "authors": [
+        {
+            "name": "jpoliveira08",
+            "email": "joaopedro.oliveirajava@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "AllBlacksRugby\\FanBase\\": "app/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "scripts": {
+        "phpcs": "phpcs --standard=PSR12 src/",
+        "tests": "phpunit --colors tests/",
+        "unit-tests": "phpunit --colors tests/Unit/",
+        "feature-tests": "phpunit --colors tests/Feature/"
+    },
+    "require": {
+        "shuchkin/simplexlsx": "^1.0"
+    }
+}
