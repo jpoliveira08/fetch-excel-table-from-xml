@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace AllBlacksRugby\FanBase\Repositories;
 
 use Shuchkin\SimpleXLSX;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class FanBaseRepositoryXlsx
 {
@@ -41,7 +43,32 @@ class FanBaseRepositoryXlsx
 
     public function update($data)
     {
-        
+        ini_set('max_execution_time', '60');
+        $inputFile = __DIR__ . '/clientes.xlsx';
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $writer = new Xlsx($spreadsheet);
+        $row = $sheet->getHighestRow();
+        $row++;
+
+        foreach ($data['torcedor'] as $key => $torcedor) {
+            $sheet->insertNewRowBefore($row);
+            $sheet->setCellValue('A' . $row, $torcedor['@attributes']['nome']);
+            $sheet->setCellValue('B' . $row, $torcedor['@attributes']['documento']);
+            $sheet->setCellValue('C' . $row, $torcedor['@attributes']['cep']);
+            $sheet->setCellValue('D' . $row, $torcedor['@attributes']['endereco']);
+            $sheet->setCellValue('E' . $row, $torcedor['@attributes']['bairro']);
+            $sheet->setCellValue('F' . $row, $torcedor['@attributes']['cidade']);
+            $sheet->setCellValue('G' . $row, $torcedor['@attributes']['uf']);
+            $sheet->setCellValue('H' . $row, $torcedor['@attributes']['telefone'] ?? '');
+            $sheet->setCellValue('I' . $row, $torcedor['@attributes']['email'] ?? '');
+            $sheet->setCellValue('J' . $row, $torcedor['@attributes']['ativo'] == 1 ? 'SIM' : 'NÃO');
+
+            $writer->save($inputFile);
+            $row++;
+        }
     }
 }
 
