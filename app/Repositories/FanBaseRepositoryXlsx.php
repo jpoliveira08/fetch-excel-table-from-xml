@@ -25,7 +25,10 @@ class FanBaseRepositoryXlsx
     {
         $file = "clientes.xlsx";
 
-        ob_end_clean();
+        if (ob_get_contents()) {
+            ob_end_clean();
+        }
+        ob_start();
 
         header('Content-Description: File Transfer');
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -43,7 +46,7 @@ class FanBaseRepositoryXlsx
 
     public function update($data)
     {
-        ini_set('max_execution_time', '60');
+        ini_set('max_execution_time', '120');
         $inputFile = __DIR__ . '/clientes.xlsx';
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
 
@@ -53,7 +56,7 @@ class FanBaseRepositoryXlsx
         $row = $sheet->getHighestRow();
         $row++;
 
-        foreach ($data['torcedor'] as $key => $torcedor) {
+        foreach ($data['torcedor'] as $torcedor) {
             $sheet->insertNewRowBefore($row);
             $sheet->setCellValue('A' . $row, $torcedor['@attributes']['nome']);
             $sheet->setCellValue('B' . $row, $torcedor['@attributes']['documento']);

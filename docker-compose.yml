@@ -1,0 +1,19 @@
+version: '3.9'
+
+networks:
+  xml-to-excel:
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php-web
+    restart: unless-stopped
+    tty: true
+    volumes: 
+      -  .:/var/www/html
+    ports:
+      - "9000:80"
+    networks:
+      - xml-to-excel

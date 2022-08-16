@@ -38,15 +38,19 @@ class FanBaseController extends Controller
 
     public function update()
     {
-        $xml = '';
-
-        if (isset($_FILES['xml-file']) && ($_FILES['xml-file']['error'] == UPLOAD_ERR_OK)) {
-            $xml = simplexml_load_file($_FILES['xml-file']['tmp_name']);                        
+        if (!isset($_FILES['xml-file']) && ($_FILES['xml-file']['error'] != UPLOAD_ERR_OK)) {
+            header('Location: ?controller=AllBlacksRugby\FanBase\Controllers\FanBaseController&method=index');
+            exit;
         }
+
+        $xml = simplexml_load_file($_FILES['xml-file']['tmp_name']);                        
 
         $jsonFromXml = json_encode($xml);
         $xmlData = json_decode($jsonFromXml, true);
 
         $this->fanBaseRepository->update($xmlData);
+
+        header('Location: ?controller=AllBlacksRugby\FanBase\Controllers\FanBaseController&method=index');
+        exit;
     }
 }

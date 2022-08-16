@@ -2,8 +2,6 @@
 
 require './vendor/autoload.php';
 
-include_once './public/partials/header.php';
-
 if ($_GET) {
     $controller = isset($_GET['controller']) ? ((class_exists($_GET['controller'])) ? new $_GET['controller'] : NULL ) : null;
     $method = isset($_GET['method']) ? $_GET['method'] : null;
@@ -29,5 +27,3 @@ if ($_GET) {
 
 <?php };
 
-include_once './public/partials/footer.php';
-?>
