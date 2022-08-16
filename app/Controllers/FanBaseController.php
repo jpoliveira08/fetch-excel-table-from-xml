@@ -35,4 +35,18 @@ class FanBaseController extends Controller
     {
         $this->fanBaseRepository->getXlsxFile();
     }
+
+    public function update()
+    {
+        $xml = '';
+
+        if (isset($_FILES['xml-file']) && ($_FILES['xml-file']['error'] == UPLOAD_ERR_OK)) {
+            $xml = simplexml_load_file($_FILES['xml-file']['tmp_name']);                        
+        }
+
+        $jsonFromXml = json_encode($xml);
+        $xmlData = json_decode($jsonFromXml, true);
+
+        $this->fanBaseRepository->update($xmlData);
+    }
 }

@@ -38,5 +38,10 @@ class FanBaseRepositoryXlsx
 
         return;
     }
+
+    public function update($data)
+    {
+        
+    }
 }
 

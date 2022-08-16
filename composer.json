@@ -23,6 +23,7 @@
         "feature-tests": "phpunit --colors tests/Feature/"
     },
     "require": {
-        "shuchkin/simplexlsx": "^1.0"
+        "shuchkin/simplexlsx": "^1.0",
+        "shuchkin/simplexlsxgen": "^1.2"
     }
 }
